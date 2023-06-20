@@ -1,0 +1,94 @@
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+
+nav{
+    border: 2px solid rgb(101, 230, 118);
+    width: 100vw;
+    height: 70px;
+    background-color: rgb(101, 230, 118);
+}
+
+nav h1{
+    display: flex;
+    justify-content: center;
+}
+
+.task-input{
+    /* border: 2px solid black; */
+    max-width: 90vw;
+    height: 50px;
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+
+.task-input input{
+    width: 20%;
+    height: 30px;
+    border: 2px solid #dedede;
+    border-radius: 5px;
+}
+
+.task-input :nth-child(2){
+    width: 50%;
+}
+
+.task-input button{
+    width: 7%;
+    height: 35px;
+    border: 2px solid #dedede;
+    border-radius: 5px;
+    background-color: rgb(101, 230, 118);
+    color: white;
+    font-weight: bold;
+}
+
+
+.container{
+    /* border: 2px solid rgb(101, 230, 118); */
+    width: 90vw;
+    margin: 10px auto;
+    
+}
+
+.container #current-tasks{
+    /* border:2px solid black; */
+    display: flex;
+    
+
+}
+
+.container #current-tasks .task{
+    border: 2px solid #dedede;
+    width: 23%;
+    height: 200px;
+    margin: 5px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px;
+    overflow: scroll;
+}
+
+.task h3{
+    /* border: 2px solid black; */
+    text-align: center;
+    background-color: rgb(101, 230, 118);
+    color: white;
+    margin: 0;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.task p{
+
+}

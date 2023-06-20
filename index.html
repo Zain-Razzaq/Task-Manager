@@ -7,10 +7,27 @@
     <title>Document</title>
 </head>
 <body>
+    <nav>
+        <h1>Task Manager</h1>
+
+    </nav>
+    <form class="task-input" onsubmit="submitNewTask(event)">
+        <input type="text" placeholder="Task Name" id="task-name" required>
+        <input type="text" placeholder="Task Description" id="task-description">
+        <input type="date" id="due-date">
+        <button type="submit" id="add-task-button">Add Task</button>
+    </form>
+    <div class="container">
+        
+        <div id="current-tasks">
+            
+        </div>
+
+    </div>
     
 
 
 
-    <script type="text/javascript" src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
