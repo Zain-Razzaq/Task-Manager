@@ -11,35 +11,45 @@ let listOfAllTasks= localStorage.listOfAllTasks;
 if (listOfAllTasks==undefined) {
     listOfAllTasks=[];
     localStorage.setItem("listOfAllTasks",JSON.stringify(listOfAllTasks));
-    console.log(listOfAllTasks);
+    // console.log(listOfAllTasks);
 }
 else {
     listOfAllTasks=JSON.parse(listOfAllTasks);
+    // console.log(listOfAllTasks);
     document.getElementById("current-tasks").innerHTML="";
     listOfAllTasks.forEach(element => {
-        createNewTask(element.taskName,element.taskDescription,element.taskStatus,element.dueDate,false);
+        createNewTask(element,false);
     });
 }
 
-function createNewTask(name,description,status="Active",dueDate,newItem=true){
-    newTaskData = new task();
-    newTaskData.taskName = name;
-    newTaskData.taskDescription = description;
-    newTaskData.taskStatus=status;
-    newTaskData.dueDate = dueDate;
 
+function createNewTask(Task, newItem=true){
+    // newTaskData = new task();
+    // newTaskData.taskName = name;
+    // newTaskData.taskDescription = description;
+    // newTaskData.taskStatus=status;
+    // newTaskData.dueDate = dueDate;
     if (newItem) {
         previousList=JSON.parse(localStorage.listOfAllTasks);
-        previousList.push(newTaskData);
+        previousList.push(Task);
         localStorage.setItem("listOfAllTasks",JSON.stringify(previousList));
     }
     let newTask=document.createElement("div");
     newTask.classList.add("task");
 
+    //Task name
+    n=document.createElement("h3");
+    // Task description
+    d=document.createElement("p");
+    d.contentEditable=true;
+    // Task Due Date
+    date = document.createElement("p");
+
+    // Checkbox to mark a task as completed
     checkBox=document.createElement("input");
     checkBox.type="checkbox";
 
-    if(newTaskData.taskStatus=="Completed"){
+    if(Task.taskStatus=="Completed"){
         checkBox.checked=true;
         newTask.classList.add("completed-task");
     }
@@ -74,10 +84,9 @@ function createNewTask(name,description,status="Active",dueDate,newItem=true){
         }
     }
     checkBox.classList.add("task-checkbox");
-    n=document.createElement("h3");
-    d=document.createElement("p");
-    d.contentEditable=true;
-    date = document.createElement("p");
+
+
+
     // Button to delete a task
     b=document.createElement("button");
     delImageStatic=document.createElement("img");
@@ -90,15 +99,6 @@ function createNewTask(name,description,status="Active",dueDate,newItem=true){
     b.appendChild(delImage);
 
 
-    // b.textContent="Delete";
-
-
-    n.textContent=newTaskData.taskName;     
-    d.textContent=newTaskData.taskDescription;
-    date.textContent=newTaskData.dueDate;
-    
-
-
     b.id=("delete-task-button");
     b.onclick= function() {
         let taskToDelete=this.parentElement.firstChild.textContent;
@@ -109,34 +109,41 @@ function createNewTask(name,description,status="Active",dueDate,newItem=true){
                 previousList.splice(index,1);
             }
         });
-        // console.log(previousList);
 
         localStorage.setItem("listOfAllTasks",JSON.stringify(previousList));
         this.parentElement.remove();
     }
 
+
+
+    // Assigning values to the HTML elements
+    n.textContent=Task.taskName;     
+    d.textContent=Task.taskDescription;
+    date.textContent=Task.dueDate;
+    
+    // Appending the elements to the task div
     newTask.appendChild(n);
     newTask.appendChild(d);
     newTask.appendChild(date);
     newTask.appendChild(checkBox);
     newTask.appendChild(b);
 
+    // Appending the task div to the current tasks div
     document.getElementById("current-tasks").appendChild(newTask);
 }
 
 
-let submitNewTask = (event) => {
-    event.preventDefault();
+function submitNewTask(){
+    newTask = new task();
+    newTask.taskName = document.getElementById("task-name").value;
+    newTask.taskDescription = document.getElementById("task-description").value;
+    newTask.dueDate = document.getElementById("due-date").value;
+    newTask.taskStatus = "Active";
 
-    let name = document.getElementById("task-name").value;
-    let description = document.getElementById("task-description").value;
-    let dueDate = document.getElementById("due-date").value;
-
-    createNewTask(name,description,"Active",dueDate);
-    document.getElementById("task-name").value="";
-    document.getElementById("task-description").value="";
-    document.getElementById("due-date").value="";
-    // console.log(localStorage.listOfAllTasks);
+    createNewTask(newTask);
+    newTask.taskName="";
+    newTask.taskDescription="";
+    newTask.dueDate="";
 }
 
 
@@ -175,52 +182,33 @@ function sortTasks(how){
     listOfAllTasks=JSON.parse(localStorage.listOfAllTasks);
     if(how === "alphabetical"){
         listOfAllTasks.sort((a,b) => {
-            if(a.taskName < b.taskName){
-                return -1;
-            }
-            else if(a.taskName > b.taskName){
-                return 1;
-            }
-            else{
-                return 0;
-            }
+            return a.taskName < b.taskName ? -1 : 1;
         });
         listOfAllTasks.forEach(element => {
-            createNewTask(element.taskName,element.taskDescription,element.taskStatus,element.dueDate,false);
+            createNewTask(element,false);
         });
     }
     else if(how === "due-date"){
         listOfAllTasks.sort((a,b) => {
-            if(a.dueDate < b.dueDate){
-                return -1;
-            }
-            else if(a.dueDate > b.dueDate){
-                return 1;
-            }
-            else{
-                return 0;
-            }
+            return a.dueDate < b.dueDate ? -1 : 1;
         });
         listOfAllTasks.forEach(element => {
-            createNewTask(element.taskName,element.taskDescription,element.taskStatus,element.dueDate,false);
+            createNewTask(element,false);
         });
     }
 }
 
-
-
 function clearCompleted(){
     listOfAllTasks=JSON.parse(localStorage.listOfAllTasks);
-    listOfAllTasks.forEach((element,index) => {
-        if (element.taskStatus=="Completed") {
-            listOfAllTasks.splice(index,1);
+    for (let i = listOfAllTasks.length-1; i >=0;i--) {
+        if (listOfAllTasks[i].taskStatus==="Completed") {
+            listOfAllTasks.splice(i,1);
         }
-    });
+    }
     localStorage.setItem("listOfAllTasks",JSON.stringify(listOfAllTasks));
-
     tasks=document.getElementById("current-tasks");
     let children = tasks.children;
-    for(let i=0;i<children.length;i++){
+    for(let i=children.length-1;i>=0;i--){
         if(children[i].classList.contains("completed-task")){
             children[i].remove();
         }

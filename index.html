@@ -11,8 +11,8 @@
         <h1>Task Manager</h1>
 
     </nav>
-    <form class="task-input" onsubmit="submitNewTask(event)">
-        <input type="text" placeholder="Task Name" id="task-name" required>
+    <form class="task-input" onsubmit="submitNewTask()">
+        <input type="text" placeholder="Task Name" id="task-name" required maxlength="25">
         <input type="text" placeholder="Task Description" id="task-description">
         <input type="date" id="due-date">
         <button class="Btn" type="submit" id="add-task-button">Add Task</button>
