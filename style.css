@@ -32,6 +32,7 @@ nav h1{
 }
 
 
+
 .task-input input{
     width: 20%;
     height: 30px;
@@ -54,6 +55,31 @@ nav h1{
 }
 
 
+@media  screen and (max-width: 600px){
+    .task-input{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 200px;
+        
+    }
+    .task-input input{
+        width: 90%;
+        height: 30px;
+        margin: 10px 0;
+    }
+    .task-input :nth-child(2){
+        width: 90%;
+    }
+    .task-input button{
+        width: 90%;
+        height: 35px;
+        margin: 10px 0;
+    }
+}
+
+
 .container{
     /* border: 2px solid rgb(101, 230, 118); */
     width: 90vw;
@@ -64,31 +90,118 @@ nav h1{
 .container #current-tasks{
     /* border:2px solid black; */
     display: flex;
-    
+    flex-wrap: wrap;
 
 }
 
 .container #current-tasks .task{
-    border: 2px solid #dedede;
-    width: 23%;
-    height: 200px;
+    border: 2px solid rgb(101, 230, 118);
+    width: 100%;
+    height: 40px;
     margin: 5px;
     background-color: white;
     border-radius: 10px;
     padding: 5px;
-    overflow: scroll;
+    /* overflow: scroll; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* flex-direction: column; */
+
 }
 
 .task h3{
-    /* border: 2px solid black; */
     text-align: center;
     background-color: rgb(101, 230, 118);
     color: white;
     margin: 0;
     padding: 5px;
     border-radius: 10px;
+    font-family: system-ui;
+    width: 15%;
+}
+
+.container #current-tasks .completed-task{
+    text-decoration: line-through;
+    border: 2px solid #dedede;
 }
 
 .task p{
+    font-family: system-ui;
+    /* border: 1px solid black; */
+}
+.task p:focus{
+    outline: none;
+}
 
+.task :nth-child(2){
+    width: 60%;
+    height: 20px;
+    align-items: center;
+    /* border: 2px solid red; */
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.task :nth-child(2)::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.task :nth-child(2) {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.task :nth-child(3){
+    width: 10%;
+    /* border: 2px solid red; */
+    height: 20px;
+}
+
+
+.task .task-checkbox{
+    scale: 2;
+    background-color: white;
+    accent-color: rgb(101, 230, 118);
+    cursor: pointer;
+}
+
+
+
+
+.task button{
+    background-color: rgb(101, 230, 118);
+    border: 2px solid #eceaea;
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    /* margin: 158px 0  0 233px;   */
+    
+}
+
+.task button:hover{
+    background-color: white;
+    border-color: rgb(101, 230, 118);
+}
+
+
+.task button .static-delete-icon{
+    position: absolute;
+    width: 25px;
+    height: 25px;
+}
+
+.task button .animated-delete-icon{
+    opacity: 0;
+    width: 25px;
+    height: 25px;
+}
+
+.task button:hover .static-delete-icon{
+    opacity: 0;
+}
+.task button:hover .animated-delete-icon{
+    opacity: 1;
 }
