@@ -38,25 +38,38 @@ function createNewTask(name,description,status="Active",dueDate,newItem=true){
 
     checkBox=document.createElement("input");
     checkBox.type="checkbox";
+
+    if(newTaskData.taskStatus=="Completed"){
+        checkBox.checked=true;
+        newTask.classList.add("completed-task");
+    }
+    else{
+        checkBox.checked=false;
+    }
+
     checkBox.onclick=function() {
         if (this.checked) {
             this.parentElement.classList.add("completed-task");
             let taskToComplete=this.parentElement.firstChild.textContent;
+            listOfAllTasks=JSON.parse(localStorage.listOfAllTasks);
             listOfAllTasks.forEach(element => {
                 if (element.taskName==taskToComplete) {
                     element.taskStatus="Completed";
                 }
             });
+            localStorage.setItem("listOfAllTasks",JSON.stringify(listOfAllTasks));
             // console.log(listOfAllTasks);
 
         } else {
             this.parentElement.classList.remove("completed-task");
             let taskToComplete=this.parentElement.firstChild.textContent;
+            listOfAllTasks=JSON.parse(localStorage.listOfAllTasks);
             listOfAllTasks.forEach(element => {
                 if (element.taskName==taskToComplete) {
                     element.taskStatus="Active";
                 }
             });
+            localStorage.setItem("listOfAllTasks",JSON.stringify(listOfAllTasks));
             // console.log(listOfAllTasks);
         }
     }
@@ -80,10 +93,10 @@ function createNewTask(name,description,status="Active",dueDate,newItem=true){
     // b.textContent="Delete";
 
 
-    n.textContent=newTaskData.taskName;
+    n.textContent=newTaskData.taskName;     
     d.textContent=newTaskData.taskDescription;
     date.textContent=newTaskData.dueDate;
-    //  check box status code will be here
+    
 
 
     b.id=("delete-task-button");
@@ -124,4 +137,92 @@ let submitNewTask = (event) => {
     document.getElementById("task-description").value="";
     document.getElementById("due-date").value="";
     // console.log(localStorage.listOfAllTasks);
+}
+
+
+ function filterTasks(how){
+    tasks=document.getElementById("current-tasks");
+    let children = tasks.children;
+    if(how === "all"){
+        for(let i=0;i<children.length;i++){
+            children[i].style.display="flex";
+        }
+    }
+    else if(how === "completed"){
+        for(let i=0;i<children.length;i++){
+            if(children[i].classList.contains("completed-task")){
+                children[i].style.display="flex";
+            }
+            else{
+                children[i].style.display="none";
+            }
+        }
+    }
+    else if(how === "active"){
+        for(let i=0;i<children.length;i++){
+            if(children[i].classList.contains("completed-task")){
+                children[i].style.display="none";
+            }
+            else{
+                children[i].style.display="flex";
+            }
+        }
+    }
+}
+
+function sortTasks(how){
+    tasks=document.getElementById("current-tasks").innerHTML="";
+    listOfAllTasks=JSON.parse(localStorage.listOfAllTasks);
+    if(how === "alphabetical"){
+        listOfAllTasks.sort((a,b) => {
+            if(a.taskName < b.taskName){
+                return -1;
+            }
+            else if(a.taskName > b.taskName){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        });
+        listOfAllTasks.forEach(element => {
+            createNewTask(element.taskName,element.taskDescription,element.taskStatus,element.dueDate,false);
+        });
+    }
+    else if(how === "due-date"){
+        listOfAllTasks.sort((a,b) => {
+            if(a.dueDate < b.dueDate){
+                return -1;
+            }
+            else if(a.dueDate > b.dueDate){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        });
+        listOfAllTasks.forEach(element => {
+            createNewTask(element.taskName,element.taskDescription,element.taskStatus,element.dueDate,false);
+        });
+    }
+}
+
+
+
+function clearCompleted(){
+    listOfAllTasks=JSON.parse(localStorage.listOfAllTasks);
+    listOfAllTasks.forEach((element,index) => {
+        if (element.taskStatus=="Completed") {
+            listOfAllTasks.splice(index,1);
+        }
+    });
+    localStorage.setItem("listOfAllTasks",JSON.stringify(listOfAllTasks));
+
+    tasks=document.getElementById("current-tasks");
+    let children = tasks.children;
+    for(let i=0;i<children.length;i++){
+        if(children[i].classList.contains("completed-task")){
+            children[i].remove();
+        }
+    }
 }
