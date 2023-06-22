@@ -20,18 +20,21 @@
 
     <div class="filter-buttons">
         <div class="filters">
-            <label for="">Show :</label>
             <button onclick="filterTasks('all')" autofocus>All</button>
             <button onclick="filterTasks('completed')">Completed</button>
             <button onclick="filterTasks('active')">Active</button>
+            <button onclick="filterTasks('overdue')">Overdue</button>
+            <button onclick="filterTasks('today')">Today</button>
         </div>
+        
+        <div class="clear">
+            <button  onclick="clearCompleted()">Clear Completed</button>
+        </div>
+
         <div class="sort">
             <label for="">Sort by :</label>
             <button onclick="sortTasks('due-date')">Due Date</button>
             <button onclick="sortTasks('alphabetical')">Alphabetical</button>
-        </div>
-        <div class="clear">
-            <button  onclick="clearCompleted()">Clear Completed</button>
         </div>
     </div>
 

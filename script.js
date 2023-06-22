@@ -24,11 +24,6 @@ else {
 
 
 function createNewTask(Task, newItem=true){
-    // newTaskData = new task();
-    // newTaskData.taskName = name;
-    // newTaskData.taskDescription = description;
-    // newTaskData.taskStatus=status;
-    // newTaskData.dueDate = dueDate;
     if (newItem) {
         previousList=JSON.parse(localStorage.listOfAllTasks);
         previousList.push(Task);
@@ -42,6 +37,21 @@ function createNewTask(Task, newItem=true){
     // Task description
     d=document.createElement("p");
     d.contentEditable=true;
+    d.spellcheck=false;
+    d.classList.add("desc");
+    d.addEventListener("blur",function(){
+        let editedDiv=this.parentElement.children;
+        listOfAllTasks=JSON.parse(localStorage.getItem("listOfAllTasks"));
+        for (let i=0;i<listOfAllTasks.length;i++) {
+            if (listOfAllTasks[i].taskName==editedDiv[0].textContent) {
+                listOfAllTasks[i].taskDescription=editedDiv[1].textContent;
+                break;
+            }
+        }
+        localStorage.setItem("listOfAllTasks",JSON.stringify(listOfAllTasks));
+
+    });
+
     // Task Due Date
     date = document.createElement("p");
 
@@ -172,6 +182,30 @@ function submitNewTask(){
             }
             else{
                 children[i].style.display="flex";
+            }
+        }
+    }
+    else if(how === "overdue"){
+        var today = new Date();
+        var date  =today.getFullYear()+"-"+String(today.getMonth()+1).padStart(2,'0')+"-"+String(today.getDate()).padStart(2,'0');        
+        for(let i=0;i<children.length;i++){
+            if( !(children[i].classList.contains("completed-task")) && children[i].children[2].textContent < date){
+                children[i].style.display="flex";
+            }
+            else{
+                children[i].style.display="none";
+            }
+        }
+    }
+    else if(how === "today"){
+        var today = new Date();
+        var date  =today.getFullYear()+"-"+String(today.getMonth()+1).padStart(2,'0')+"-"+String(today.getDate()).padStart(2,'0');        
+        for(let i=0;i<children.length;i++){
+            if(children[i].children[2].textContent == date){
+                children[i].style.display="flex";
+            }
+            else{
+                children[i].style.display="none";
             }
         }
     }
