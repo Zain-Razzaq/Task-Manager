@@ -1,5 +1,4 @@
-
-body{
+body {
     margin: 0;
     padding: 0;
     background-color: #f2f2f2;
@@ -10,23 +9,26 @@ body{
     src: url(./images/Metal\ Mania.ttf);
 }
 
-
-nav{
+nav {
     border: 2px solid rgb(101, 230, 118);
     width: 100vw;
     height: 70px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(90deg, rgba(101,230,118,1), rgb(0, 255, 183) 100%);
+    background: linear-gradient(
+        90deg,
+        rgba(101, 230, 118, 1),
+        rgb(0, 255, 183) 100%
+    );
 }
 
-nav h1{
+nav h1 {
     font-family: metal;
     font-size: 35px;
 }
 
-.task-input{
+.task-input {
     /* border: 2px solid black; */
     max-width: 90vw;
     height: 50px;
@@ -39,20 +41,18 @@ nav h1{
     padding: 5px 10px;
 }
 
-
-
-.task-input input{
+.task-input input {
     width: 20%;
     height: 30px;
     border: 2px solid #dedede;
     border-radius: 5px;
 }
 
-.task-input :nth-child(2){
+.task-input :nth-child(2) {
     width: 50%;
 }
 
-.task-input button{
+.task-input button {
     width: 7%;
     height: 35px;
     border: 2px solid #dedede;
@@ -61,64 +61,53 @@ nav h1{
     color: white;
     font-weight: bold;
 }
-.task-input button:hover{
+.task-input button:hover {
     color: black;
     background-color: white;
     border-color: rgb(101, 230, 118);
 }
 
-
-
-
-
-.filter-buttons{
+.filter-buttons {
     /* border: 2px solid rgb(101, 230, 118); */
-    width :90vw;
+    width: 90vw;
     margin: 10px auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px; 
+    padding: 10px;
     flex-wrap: wrap;
-
-
 }
 
-.filter-buttons button{
+.filter-buttons button {
     background-color: rgb(101, 230, 118);
     border: 2px solid #eceaea;
     border-radius: 5px;
     padding: 8px;
     cursor: pointer;
-    
 }
-.filter-buttons button:hover{
+.filter-buttons button:hover {
     background-color: white;
     border-color: rgb(101, 230, 118);
 }
-.filter-buttons button:focus{
+.filter-buttons button:focus {
     background-color: white;
     border-color: rgb(101, 230, 118);
     outline: none;
 }
 
-
-
-.container{
+.container {
     /* border: 2px solid rgb(101, 230, 118); */
     width: 90vw;
     margin: 10px auto;
-    
 }
 
-.container #current-tasks{
+.container #current-tasks {
     /* border:2px solid black; */
     display: flex;
     flex-wrap: wrap;
-
 }
 
-.container #current-tasks .task{
+.container #current-tasks .task {
     border: 2px solid rgb(101, 230, 118);
     width: 100%;
     height: 50px;
@@ -128,10 +117,9 @@ nav h1{
     display: flex;
     justify-content: space-between;
     align-items: center;
-
 }
 
-.task h3{
+.task h3 {
     text-align: center;
     background-color: rgb(101, 230, 118);
     color: white;
@@ -146,20 +134,20 @@ nav h1{
     justify-content: center;
 }
 
-.container #current-tasks .completed-task{
+.container #current-tasks .completed-task {
     text-decoration: line-through;
     border: 2px solid #dedede;
 }
 
-.task p{
+.task p {
     font-family: system-ui;
     /* border: 1px solid black; */
 }
-.task p:focus{
+.task p:focus {
     outline: none;
 }
 
-.task :nth-child(2){
+.task :nth-child(2) {
     /* max-width: 60%; */
     width: 60%;
     height: 20px;
@@ -176,110 +164,98 @@ nav h1{
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .task :nth-child(2) {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 
-.task :nth-child(3){
+.task :nth-child(3) {
     width: 10%;
     /* border: 2px solid red; */
     height: 20px;
 }
 
-
-.task .task-checkbox{
+.task .task-checkbox {
     scale: 2;
     background-color: white;
     accent-color: rgb(101, 230, 118);
     cursor: pointer;
 }
 
-
-
-
-.task button{
+.task button {
     background-color: rgb(101, 230, 118);
     border: 2px solid rgb(101, 230, 118);
     width: 50px;
     height: 50px;
-    
 }
 
-.task button:hover{
+.task button:hover {
     background-color: white;
     border: none;
     border-radius: 0 7px 7px 0;
     border-left: 2px solid rgb(101, 230, 118);
 }
 
-
-.task button .static-delete-icon{
+.task button .static-delete-icon {
     position: absolute;
     width: 25px;
     height: 25px;
 }
 
-.task button .animated-delete-icon{
+.task button .animated-delete-icon {
     opacity: 0;
     width: 25px;
     height: 25px;
 }
 
-.task button:hover .static-delete-icon{
+.task button:hover .static-delete-icon {
     opacity: 0;
 }
-.task button:hover .animated-delete-icon{
+.task button:hover .animated-delete-icon {
     opacity: 1;
 }
 
-
-
 /* //////////////////////////  Media Queries  ////////////////////////// */
 
-
-@media  screen and (max-width: 700px){
-    .task-input{
+@media screen and (max-width: 700px) {
+    .task-input {
         flex-direction: column;
         justify-content: center;
         align-items: center;
         width: 100%;
         height: 200px;
-        
     }
-    .task-input input{
+    .task-input input {
         width: 90%;
         height: 30px;
         margin: 10px 0;
     }
-    .task-input :nth-child(2){
+    .task-input :nth-child(2) {
         width: 90%;
     }
-    .task-input button{
+    .task-input button {
         width: 90%;
         height: 35px;
         margin: 10px 0;
     }
-    .filter-buttons div{
+    .filter-buttons div {
         display: flex;
         flex-wrap: wrap;
     }
 
-
-    .container #current-tasks .task{
+    .container #current-tasks .task {
         flex-direction: column;
         width: 100%;
         height: 250px;
         justify-content: left;
         align-items: flex-start;
         position: relative;
-
     }
-    .task h3{
+    .task h3 {
         width: 98.5%;
         height: 60px;
         margin: 0;
     }
-    .task :nth-child(2){
+    .task :nth-child(2) {
         width: 96%;
         height: 180px;
         padding: 0 8px;
@@ -288,19 +264,19 @@ nav h1{
         overflow-y: auto;
         white-space: normal;
     }
-    .task :nth-child(3){
+    .task :nth-child(3) {
         width: 98%;
         margin: 20px;
     }
-    .task .task-checkbox{
+    .task .task-checkbox {
         position: absolute;
         top: 16px;
         left: 16px;
     }
 
-    .task button{
+    .task button {
         position: absolute;
-        top : 77%;
+        top: 77%;
         right: 5px;
         border-radius: 7px;
         text-align: center;
@@ -308,9 +284,8 @@ nav h1{
         align-items: center;
         justify-content: center;
     }
-    .task button:hover{
+    .task button:hover {
         border-radius: 7px;
         border: 2px solid rgb(101, 230, 118);
     }
-
 }
