@@ -141,36 +141,32 @@ nav h1 {
 
 .task p {
     font-family: system-ui;
-    /* border: 1px solid black; */
 }
 .task p:focus {
     outline: none;
 }
 
-.task :nth-child(2) {
-    /* max-width: 60%; */
+.task .desc {
     width: 60%;
     height: 20px;
     align-items: center;
-    /* border: 2px solid red; */
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
 }
 
-.task :nth-child(2)::-webkit-scrollbar {
+.task .desc::-webkit-scrollbar {
     display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-.task :nth-child(2) {
+.task .desc {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
 
-.task :nth-child(3) {
+.task .date {
     width: 10%;
-    /* border: 2px solid red; */
     height: 20px;
 }
 
@@ -255,7 +251,7 @@ nav h1 {
         height: 60px;
         margin: 0;
     }
-    .task :nth-child(2) {
+    .task .desc {
         width: 96%;
         height: 180px;
         padding: 0 8px;
@@ -264,7 +260,7 @@ nav h1 {
         overflow-y: auto;
         white-space: normal;
     }
-    .task :nth-child(3) {
+    .task .date {
         width: 98%;
         margin: 20px;
     }

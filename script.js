@@ -26,7 +26,7 @@ if (!listOfAllTasks) {
 }
 
 function makeDesc() {
-    newTaskDesc = document.createElement("p");
+    const newTaskDesc = document.createElement("p");
     newTaskDesc.contentEditable = true;
     newTaskDesc.spellcheck = false;
     newTaskDesc.classList.add("desc");
@@ -45,7 +45,7 @@ function makeDesc() {
 }
 
 function makeCheckbox() {
-    checkBox = document.createElement("input");
+    const checkBox = document.createElement("input");
     checkBox.type = "checkbox";
     checkBox.onclick = function () {
         if (this.checked) {
@@ -81,9 +81,9 @@ function makeCheckbox() {
 }
 
 function makeDeleteButton() {
-    newTaskButton = document.createElement("button");
-    delImageStatic = document.createElement("img");
-    delImage = document.createElement("img");
+    const newTaskButton = document.createElement("button");
+    const delImageStatic = document.createElement("img");
+    const delImage = document.createElement("img");
     delImageStatic.src = "images/deleteIconStatic.png";
     delImageStatic.classList.add("static-delete-icon");
     delImage.src = "images/deleteIcon.gif";
@@ -94,12 +94,9 @@ function makeDeleteButton() {
     newTaskButton.id = "delete-task-button";
     newTaskButton.onclick = function () {
         let taskToDelete = this.parentElement.firstChild.textContent;
-
-        previousList = JSON.parse(localStorage.listOfAllTasks);
-        previousList.forEach((element, index) => {
-            if (element.taskName == taskToDelete) {
-                previousList.splice(index, 1);
-            }
+        let previousList = JSON.parse(localStorage.listOfAllTasks);
+        previousList = previousList.filter((element) => {
+            return element.taskName != taskToDelete;
         });
 
         localStorage.setItem("listOfAllTasks", JSON.stringify(previousList));
@@ -114,24 +111,28 @@ function createNewTask(task, newItem = true) {
         previousList.push(task);
         localStorage.setItem("listOfAllTasks", JSON.stringify(previousList));
     }
-    let newTask = document.createElement("div");
+    const newTask = document.createElement("div");
     newTask.classList.add("task");
     newTask.draggable = true;
+    newTask.addEventListener("dragstart", dragStart);
+    newTask.addEventListener("drop", dragDrop);
+    newTask.addEventListener("dragover", dragOver);
 
     //Task name
-    newTaskName = document.createElement("h3");
+    const newTaskName = document.createElement("h3");
 
     // Task description
-    newTaskDesc = makeDesc();
+    const newTaskDesc = makeDesc();
 
     // Task Due Date
-    date = document.createElement("p");
+    const date = document.createElement("p");
+    date.classList.add("date");
 
     // Checkbox to mark a task as completed
-    checkBox = makeCheckbox();
+    const checkBox = makeCheckbox();
 
     // Button to delete a task
-    newTaskButton = makeDeleteButton();
+    const newTaskButton = makeDeleteButton();
 
     // Assigning values to the HTML elements
     newTaskName.textContent = task.taskName;
@@ -152,25 +153,22 @@ function createNewTask(task, newItem = true) {
     newTask.appendChild(newTaskButton);
 
     // Appending the task div to the current tasks div
-    document.getElementById("current-tasks").appendChild(newTask);
+    document.getElementById("current-tasks").prepend(newTask);
 }
 
 function submitNewTask() {
-    newTask = new Task();
+    const newTask = new Task();
     newTask.taskName = document.getElementById("task-name").value;
     newTask.taskDescription = document.getElementById("task-description").value;
     newTask.dueDate = document.getElementById("due-date").value;
     newTask.taskStatus = "Active";
 
     createNewTask(newTask);
-    newTask.taskName = "";
-    newTask.taskDescription = "";
-    newTask.dueDate = "";
+    newTask.taskName = newTask.taskDescription = newTask.dueDate = "";
 }
 
 function filterTasks(filterType) {
-    tasks = document.getElementById("current-tasks");
-    let children = tasks.children;
+    let children = document.getElementById("current-tasks").children;
     if (filterType === "all") {
         for (let i = 0; i < children.length; i++) {
             children[i].style.display = "flex";
@@ -223,15 +221,15 @@ function filterTasks(filterType) {
 }
 
 function sortTasks(sortType) {
-    tasks = document.getElementById("current-tasks").innerHTML = "";
+    document.getElementById("current-tasks").innerHTML = "";
     listOfAllTasks = JSON.parse(localStorage.listOfAllTasks);
     if (sortType === "alphabetical") {
-        listOfAllTasks.sort((a, b) => (a.taskName < b.taskName ? -1 : 1));
+        listOfAllTasks.sort((a, b) => (a.taskName > b.taskName ? -1 : 1));
         listOfAllTasks.forEach((element) => {
             createNewTask(element, false);
         });
     } else if (sortType === "due-date") {
-        listOfAllTasks.sort((a, b) => (a.dueDate < b.dueDate ? -1 : 1));
+        listOfAllTasks.sort((a, b) => (a.dueDate > b.dueDate ? -1 : 1));
         listOfAllTasks.forEach((element) => {
             createNewTask(element, false);
         });
@@ -240,14 +238,10 @@ function sortTasks(sortType) {
 
 function clearCompleted() {
     listOfAllTasks = JSON.parse(localStorage.listOfAllTasks);
-    for (let i = listOfAllTasks.length - 1; i >= 0; i--) {
-        if (listOfAllTasks[i].taskStatus === "Completed") {
-            listOfAllTasks.splice(i, 1);
-        }
-    }
+    listOfAllTasks= listOfAllTasks.filter((task) => task.taskStatus === "Active");
     localStorage.setItem("listOfAllTasks", JSON.stringify(listOfAllTasks));
-    tasks = document.getElementById("current-tasks");
-    let children = tasks.children;
+
+    let children = document.getElementById("current-tasks").children;
     for (let i = children.length - 1; i >= 0; i--) {
         if (children[i].classList.contains("completed-task")) {
             children[i].remove();
@@ -257,13 +251,8 @@ function clearCompleted() {
 
 // Drag and drop functions
 
-let tasks = document.getElementsByClassName("task");
 let dragedTask = null;
-for (let i = 0; i < tasks.length; i++) {
-    tasks[i].addEventListener("dragstart", dragStart);
-    tasks[i].addEventListener("drop", dragDrop);
-    tasks[i].addEventListener("dragover", dragOver);
-}
+
 function dragStart(event) {
     dragedTask = this;
     event.dataTransfer.effectAllowed = "move";
@@ -281,7 +270,6 @@ function dragDrop(event) {
     if (dragedTask != this) {
         dragedTask.innerHTML = this.innerHTML;
         this.innerHTML = event.dataTransfer.getData("text/html");
-        this.removeChild(this.firstChild);
     }
     return false;
 }
