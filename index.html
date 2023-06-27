@@ -10,7 +10,7 @@
         <nav>
             <h1>Task Manager</h1>
         </nav>
-        <form class="task-input" onsubmit="submitNewTask()">
+        <form class="task-input" id="task-input-form">
             <input
                 type="text"
                 placeholder="Task Name"
@@ -31,29 +31,27 @@
 
         <div class="filter-buttons">
             <div class="filters">
-                <button onclick="filterTasks('all')" autofocus>All</button>
-                <button onclick="filterTasks('completed')">Completed</button>
-                <button onclick="filterTasks('active')">Active</button>
-                <button onclick="filterTasks('overdue')">Overdue</button>
-                <button onclick="filterTasks('today')">Today</button>
+                <button id="show-all" autofocus>All</button>
+                <button id="show-completed">Completed</button>
+                <button id="show-active">Active</button>
+                <button id="show-overdue">Overdue</button>
+                <button id="show-today">Today</button>
             </div>
 
             <div class="clear">
-                <button onclick="clearCompleted()">Clear Completed</button>
+                <button id="clear-completed-button">Clear Completed</button>
             </div>
 
             <div class="sort">
                 <label for="">Sort by :</label>
-                <button onclick="sortTasks('due-date')">Due Date</button>
-                <button onclick="sortTasks('alphabetical')">
-                    Alphabetical
-                </button>
+                <button id="sort-due-date">Due Date</button>
+                <button id="sort-alphabetical">Alphabetical</button>
             </div>
         </div>
 
         <div class="container">
             <div id="current-tasks"></div>
         </div>
-        <script src="script.js"></script>
+        <script type="module" src="script.js"></script>
     </body>
 </html>

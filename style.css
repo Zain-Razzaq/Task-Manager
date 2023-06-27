@@ -165,7 +165,7 @@ nav h1 {
     scrollbar-width: none; /* Firefox */
 }
 
-.task .date {
+.task .due-date {
     width: 10%;
     height: 20px;
 }
