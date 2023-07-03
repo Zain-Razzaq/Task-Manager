@@ -16,14 +16,23 @@ function dragDrop(event) {
     event.stopPropagation();
     if (dragedTask != this) {
         // swaping the classes
-        const a = { ...this.classList };
-        const b = { ...dragedTask.classList };
-        console.log(a);
-        console.log(b);
-        this.classList = [];
-        dragedTask.classList = [];
-        this.classList = b;
-        dragedTask.classList = a;
+
+
+        const classesOfThis =Array.from( this.classList);
+        classesOfThis.forEach((className) => {
+            this.classList.remove(className);
+        });
+
+        const classesOfDragedTask = Array.from(dragedTask.classList);
+        classesOfDragedTask.forEach((className) => {
+            dragedTask.classList.remove(className);
+        });
+        classesOfThis.forEach((className) => {
+            dragedTask.classList.add(className);
+        });
+        classesOfDragedTask.forEach((className) => {
+            this.classList.add(className);
+        });
 
         // swaping the innerHTML
         dragedTask.innerHTML = this.innerHTML;

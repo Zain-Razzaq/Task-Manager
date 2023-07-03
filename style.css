@@ -260,7 +260,7 @@ nav h1 {
         overflow-y: auto;
         white-space: normal;
     }
-    .task .date {
+    .task .due-date {
         width: 98%;
         margin: 20px;
     }
